@@ -173,18 +173,9 @@ const webpackConfig = {
 			getAliasesForExtensions()
 		),
 	},
-	node: {
-		console: false,
-		process: true,
-		global: true,
-		Buffer: true,
-		__filename: 'mock',
-		__dirname: 'mock',
-		fs: 'empty',
-		crypto: false,
-		stream: false,
-	},
+	node: false,
 	plugins: _.compact( [
+		new webpack.NormalModuleReplacementPlugin( /^fs$/, 'lib/warn' ), // @todo: lib/warn is not the right mock for the job
 		new webpack.DefinePlugin( {
 			'process.env.NODE_ENV': JSON.stringify( bundleEnv ),
 			PROJECT_NAME: JSON.stringify( config( 'project' ) ),
